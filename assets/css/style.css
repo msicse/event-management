@@ -1,0 +1,6 @@
+.form-control, .btn, .card {
+    border-radius: 0;
+}
+.error{
+    color: #f00;
+}
