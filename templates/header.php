@@ -1,11 +1,21 @@
+<?php
+session_start();
+$success = "";
+$errors = [];
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
 
     <title>Event Management System</title>
 </head>
@@ -29,12 +39,21 @@
 
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><?php echo $_SESSION['user_name']; ?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php">Logout</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.php">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Login</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
 
             </div>
@@ -42,3 +61,27 @@
     </nav>
 
     <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 col-sm-10 mx-auto px-3">
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?php echo htmlspecialchars($_SESSION['success']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <?php unset($_SESSION['success']); ?>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])): ?>
+                    <div class="alert alert-danger">
+                        <ul>
+                            <?php foreach ($_SESSION['errors'] as $error): ?>
+                                <li><?php echo htmlspecialchars($error); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php unset($_SESSION['errors']); ?>
+                <?php endif; ?>
+            </div>
+
+        </div>
