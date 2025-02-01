@@ -5,6 +5,11 @@ require_once '../includes/helpers.php';
 
 $name = $email = $password = $confirm_password = "";
 
+if (isset($_SESSION['user_id'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data and trim spaces

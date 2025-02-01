@@ -1,8 +1,12 @@
 <?php
-// session_start();
 include('../templates/header.php');
 require_once '../includes/db_connection.php';
 require_once '../includes/helpers.php';
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: dashboard.php");
+    exit();
+}
 
 
 $email = $password = "";
